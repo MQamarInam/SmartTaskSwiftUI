@@ -16,7 +16,7 @@ struct TaskCardView: View {
         
         VStack(alignment: .leading, spacing: 10) {
             Text(task.title)
-                .font(.system(size: 18, weight: .bold))
+                .font(.custom("AmsiPro-Bold", size: 15))
                 .foregroundColor(.primary)
 
             Divider()
@@ -24,10 +24,10 @@ struct TaskCardView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Due date")
-                        .font(.subheadline)
+                        .font(.custom("AmsiPro-Regular", size: 10))
                         .foregroundColor(.gray)
                     Text(task.dueDate ?? "N/A")
-                        .font(.headline)
+                        .font(.custom("AmsiPro-Bold", size: 15))
                         .foregroundColor(.primary)
                 }
 
@@ -35,10 +35,10 @@ struct TaskCardView: View {
 
                 VStack(alignment: .trailing, spacing: 5) {
                     Text("Days left")
-                        .font(.subheadline)
+                        .font(.custom("AmsiPro-Regular", size: 10))
                         .foregroundColor(.gray)
                     Text(daysLeft)
-                        .font(.headline)
+                        .font(.custom("AmsiPro-Bold", size: 15))
                         .foregroundColor(.primary)
                 }
             }

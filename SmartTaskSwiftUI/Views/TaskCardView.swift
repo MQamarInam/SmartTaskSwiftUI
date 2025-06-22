@@ -8,21 +8,25 @@
 import SwiftUI
 
 struct TaskCardView: View {
+    
+    let task: Task
+    let daysLeft: String
+    
     var body: some View {
         
         VStack(alignment: .leading, spacing: 10) {
-            Text("Title")
+            Text(task.title)
                 .font(.system(size: 18, weight: .bold))
                 .foregroundColor(.primary)
-            
+
             Divider()
-            
+
             HStack {
                 VStack(alignment: .leading, spacing: 5) {
                     Text("Due date")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("2025-7-15")
+                    Text(task.dueDate ?? "N/A")
                         .font(.headline)
                         .foregroundColor(.primary)
                 }
@@ -33,7 +37,7 @@ struct TaskCardView: View {
                     Text("Days left")
                         .font(.subheadline)
                         .foregroundColor(.gray)
-                    Text("20")
+                    Text(daysLeft)
                         .font(.headline)
                         .foregroundColor(.primary)
                 }
@@ -49,5 +53,15 @@ struct TaskCardView: View {
 }
 
 #Preview {
-    TaskCardView()
+    TaskCardView(
+        task: Task(
+            id: "1",
+            targetDate: "2025-07-01",
+            dueDate: "2025-07-10",
+            title: "Sample Task Title",
+            description: "This is a sample task description for preview.",
+            priority: 1
+        ),
+        daysLeft: "5"
+    )
 }

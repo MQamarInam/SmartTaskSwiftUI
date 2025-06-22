@@ -6,6 +6,10 @@
 
 import Foundation
 
+struct TaskResponse: Codable {
+    let tasks: [Task]
+}
+
 struct Task: Codable, Identifiable {
     let id: String
     let targetDate: String
@@ -21,24 +25,5 @@ struct Task: Codable, Identifiable {
         case title = "Title"
         case description = "Description"
         case priority = "Priority"
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        self.id = try container.decode(String.self, forKey: .id)
-        self.targetDate = try container.decode(String.self, forKey: .targetDate)
-        self.dueDate = try container.decodeIfPresent(String.self, forKey: .dueDate)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.description = try container.decode(String.self, forKey: .description)
-        self.priority = try container.decodeIfPresent(Int.self, forKey: .priority)
-    }
-}
-
-struct TaskResponse: Codable {
-    let tasks: [Task]
-
-    enum CodingKeys: String, CodingKey {
-        case tasks
     }
 }

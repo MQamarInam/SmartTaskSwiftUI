@@ -8,8 +8,24 @@
 import SwiftUI
 
 struct TaskListView: View {
+    
+    @StateObject private var viewModel = TaskViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        ScrollView {
+            VStack(spacing: 15) {
+                ForEach(viewModel.tasks) { task in
+                    TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate))
+                }
+            }
+            .padding(.top)
+        }
+        .background(Color(red: 1.0, green: 0.88, blue: 0.4).ignoresSafeArea()) // #FFE066
+        .onAppear {
+            viewModel.loadTasks()
+        }
+        
     }
 }
 

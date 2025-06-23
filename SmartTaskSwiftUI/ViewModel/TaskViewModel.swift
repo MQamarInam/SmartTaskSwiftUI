@@ -44,11 +44,3 @@ class TaskViewModel: ObservableObject {
         return "\(days)"
     }
 }
-
-extension DateFormatter {
-    static let taskDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
-        return formatter
-    }()
-}

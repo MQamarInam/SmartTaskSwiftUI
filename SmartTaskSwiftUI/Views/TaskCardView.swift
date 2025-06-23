@@ -17,35 +17,35 @@ struct TaskCardView: View {
         VStack(alignment: .leading, spacing: 10) {
             Text(task.title)
                 .font(.amsiProBold(size: 15))
-                .foregroundColor(.primary)
+                .foregroundColor(Color("failure"))
 
             Divider()
 
             HStack {
-                VStack(alignment: .leading, spacing: 5) {
+                VStack(alignment: .leading, spacing: 7) {
                     Text("Due date")
                         .font(.amsiProRegular(size: 10))
                         .foregroundColor(.gray)
                     Text(task.dueDate ?? "N/A")
                         .font(.amsiProBold(size: 15))
-                        .foregroundColor(.primary)
+                        .foregroundColor(Color("failure"))
                 }
 
                 Spacer()
 
-                VStack(alignment: .trailing, spacing: 5) {
+                VStack(alignment: .trailing, spacing: 7) {
                     Text("Days left")
                         .font(.amsiProRegular(size: 10))
                         .foregroundColor(.gray)
                     Text(daysLeft)
                         .font(.amsiProBold(size: 15))
-                        .foregroundColor(.primary)
+                        .foregroundColor(Color("failure"))
                 }
             }
         }
-        .padding()
+        .padding(10)
         .background(Color.white)
-        .cornerRadius(8)
+        .cornerRadius(5)
         .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
         
     }

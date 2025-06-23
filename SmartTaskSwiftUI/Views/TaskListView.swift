@@ -17,26 +17,27 @@ struct TaskListView: View {
         NavigationStack {
             VStack {
                 VStack {
+                    NavigationBarView()
                     List(viewModel.tasks) { task in
                         Button {
                             selectedTask = task
                         } label: {
                             TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate)
                             )
+                            .padding(.vertical, -5)
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .listRowBackground(Color(red: 1.0, green: 0.88, blue: 0.4))
+                        .listRowBackground(Color("primary_background"))
                         .listRowSeparator(.hidden)
                     }
                     .listStyle(PlainListStyle())
                     .scrollContentBackground(.hidden)
                 }
             }
-            .background(Color(red: 1.0, green: 0.88, blue: 0.4).ignoresSafeArea())
+            .background(Color("primary_background").ignoresSafeArea())
             .onAppear {
                 viewModel.loadTasks()
             }
-            .navigationTitle("Tasks")
             .navigationDestination(item: $selectedTask) { task in
                 TaskDetailView(task: task)
             }

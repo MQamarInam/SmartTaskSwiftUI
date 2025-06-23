@@ -15,7 +15,8 @@ struct LaunchScreen: View {
         
         ZStack {
             // Backgrounnd Layer
-            Color(red: 1.0, green: 0.88, blue: 0.4).ignoresSafeArea()
+            Color("primary_background")
+                .ignoresSafeArea()
             
             // Foreground Layer
             if isActive {

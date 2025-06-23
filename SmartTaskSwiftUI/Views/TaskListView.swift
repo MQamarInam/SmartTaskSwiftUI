@@ -18,19 +18,25 @@ struct TaskListView: View {
             VStack {
                 VStack {
                     NavigationBarView()
-                    List(viewModel.tasks) { task in
-                        Button {
-                            selectedTask = task
-                        } label: {
-                            TaskCardView(task: task, viewModel: viewModel)
-                                .padding(.vertical, -5)
+                    
+                    if viewModel.tasks.isEmpty {
+                        EmptyView()
+                    } else {
+                        List(viewModel.tasks) { task in
+                            Button {
+                                selectedTask = task
+                            } label: {
+                                TaskCardView(task: task, viewModel: viewModel)
+                                    .padding(.vertical, -5)
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .listRowBackground(Color("primary_background"))
+                            .listRowSeparator(.hidden)
                         }
-                        .buttonStyle(PlainButtonStyle())
-                        .listRowBackground(Color("primary_background"))
-                        .listRowSeparator(.hidden)
+                        .listStyle(PlainListStyle())
+                        .scrollContentBackground(.hidden)
                     }
-                    .listStyle(PlainListStyle())
-                    .scrollContentBackground(.hidden)
+                    
                 }
             }
             .background(Color("primary_background").ignoresSafeArea())

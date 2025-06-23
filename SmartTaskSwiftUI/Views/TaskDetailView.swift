@@ -10,8 +10,36 @@ import SwiftUI
 struct TaskDetailView: View {
     
     let task: Task
+    @State private var resolutionStatus: TaskResolutionStatus = .unresolved
+    @State private var animateImage: Bool = false
+    @Environment(\.dismiss) var dismiss
+    @ObservedObject var viewModel: TaskViewModel
+    
+    private var statusText: String {
+        switch resolutionStatus {
+        case .unresolved:
+            return "Unresolved"
+        case .resolved:
+            return "Resolved"
+        case .cantResolve:
+            return "Can't resolve"
+        }
+    }
+    
+    private var statusColor: Color {
+        switch resolutionStatus {
+        case .unresolved:
+            return .primaryBackground
+        case .resolved:
+            return Color(.success)
+        case .cantResolve:
+            return Color(.failure)
+        }
+    }
 
     var body: some View {
+        
+        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate)
         
         ZStack {
             // Backgrounnd Layer
@@ -23,7 +51,7 @@ struct TaskDetailView: View {
                 // Navbar section
                 HStack {
                     Button(action: {
-                        
+                        dismiss()
                     }) {
                         Image("left_arrow")
                             .padding(.leading, -5)
@@ -49,14 +77,16 @@ struct TaskDetailView: View {
                         .frame(maxWidth: .infinity)
                     
                     VStack {
-                        Text("Task Title")
-                            .font(.amsiProBold(size: 30))
-                            .foregroundColor(Color("failure"))
+                        Text(task.title)
+                            .font(.amsiProBold(size: 20))
+                            .foregroundColor(statusColor)
                             .padding(.vertical, 7)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.top, 30)
                         
                         Divider()
+                            .frame(height: 2)
+                            .background(Color("seperator"))
                         
                         HStack {
                             VStack(alignment: .leading, spacing: 7) {
@@ -65,34 +95,38 @@ struct TaskDetailView: View {
                                     .foregroundColor(.gray)
                                 Text(task.dueDate ?? "N/A")
                                     .font(.amsiProBold(size: 15))
-                                    .foregroundColor(Color("failure"))
+                                    .foregroundColor(statusColor)
                             }
                             Spacer()
                             VStack(alignment: .trailing, spacing: 7) {
                                 Text("Days left")
                                     .font(.amsiProRegular(size: 10))
                                     .foregroundColor(.gray)
-                                Text("5")
+                                Text(daysLeft)
                                     .font(.amsiProBold(size: 15))
-                                    .foregroundColor(Color("failure"))
+                                    .foregroundColor(statusColor)
                             }
                         }
                         .padding(.vertical, 7)
                         
                         Divider()
+                            .frame(height: 2)
+                            .background(Color("seperator"))
                         
-                        Text("dskda d df dcdcdcd df f fv v fv fv fv fv fv fv fv fv fv fv fv f vfv f v fvfvfvfvfvfvfvf vf v  gr gw r f qref ef rg rg rwgrt gt g wfqe f r wf r ef rfg rewf rfrfrfgrfg rfg  rfg  r wgw r f rgf rg erew fe ferfer fref erfr f erf f ")
+                        Text(task.description)
                             .font(.amsiProRegular(size: 15))
                             .multilineTextAlignment(.leading)
+                            .frame(minHeight: 60, alignment: .topLeading)
                             .lineLimit(nil)
                             .padding(.vertical, 7)
                         
                         Divider()
-                            .background(Color("myprimarycolor"))
+                            .frame(height: 2)
+                            .background(Color("seperator"))
                         
-                        Text("Status")
+                        Text(statusText)
                             .font(.amsiProBold(size: 15))
-                            .foregroundColor(Color("failure"))
+                            .foregroundColor(statusColor)
                             .padding(.vertical, 7)
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
@@ -100,39 +134,59 @@ struct TaskDetailView: View {
                 }
                 
                 // Other Message Section
-                HStack {
-                    Button {
-                        
-                    } label: {
-                        Text("Resolve")
-                            .font(.amsiProBold(size: 15))
-                            .padding()
-                            .foregroundStyle(Color.white)
-                            .frame(maxWidth: .infinity)
-                            .background(Color("success"))
-                            .cornerRadius(5)
-                    }
-                    
-                    Button {
-                        
-                    } label: {
-                        Text("Can't resolve")
-                            .font(.amsiProBold(size: 15))
-                            .padding()
-                            .foregroundStyle(Color.white)
-                            .frame(maxWidth: .infinity)
-                            .background(Color("failure"))
-                            .cornerRadius(5)
+                VStack(spacing: 16) {
+                    if resolutionStatus == .unresolved {
+                        HStack {
+                            Button {
+                                resolutionStatus = .resolved
+                            } label: {
+                                Text("Resolve")
+                                    .font(.amsiProBold(size: 15))
+                                    .padding()
+                                    .foregroundStyle(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color("success"))
+                                    .cornerRadius(5)
+                            }
+
+                            Button {
+                                resolutionStatus = .cantResolve
+                            } label: {
+                                Text("Can't resolve")
+                                    .font(.amsiProBold(size: 15))
+                                    .padding()
+                                    .foregroundStyle(.white)
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color("failure"))
+                                    .cornerRadius(5)
+                            }
+                        }
+                    } else {
+                        Image(resolutionStatus == .resolved ? "tick_icon" : "cross_icon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 120, height: 120)
+                            .scaleEffect(animateImage ? 1.0 : 0.7)
+                            .opacity(animateImage ? 1.0 : 0.7)
+                            .animation(.easeOut(duration: 0.4), value: animateImage)
+                            .padding(.top, 30)
                     }
                 }
-                
-                Image("cross_icon")
+                .onChange(of: resolutionStatus) { oldValue, newValue in
+                    if newValue != .unresolved {
+                        animateImage = false
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
+                            animateImage = true
+                        }
+                    }
+                }
                 
                 Spacer()
                 
             }  // Vstack End
             .frame(maxWidth: .infinity)
             .padding(.horizontal)
+            .navigationBarBackButtonHidden(true)
         }
         
     }
@@ -147,5 +201,7 @@ struct TaskDetailView: View {
         title: "Sample Task Title",
         description: "This is a sample task description for preview.",
         priority: 1
-    ))
+    ),
+        viewModel: TaskViewModel()
+    )
 }

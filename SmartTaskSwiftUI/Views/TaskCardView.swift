@@ -10,9 +10,11 @@ import SwiftUI
 struct TaskCardView: View {
     
     let task: Task
-    let daysLeft: String
+    @ObservedObject var viewModel: TaskViewModel
     
     var body: some View {
+        
+        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate)
         
         VStack(alignment: .leading, spacing: 10) {
             Text(task.title)
@@ -61,6 +63,6 @@ struct TaskCardView: View {
             description: "This is a sample task description for preview.",
             priority: 1
         ),
-        daysLeft: "5"
+        viewModel: TaskViewModel()
     )
 }

@@ -27,6 +27,9 @@ struct LaunchScreen: View {
                     Image("launch_screen_logo")
                     Spacer()
                     Image("launch_screen_image")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 290, height: 290)
                 }
                 .onAppear {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {

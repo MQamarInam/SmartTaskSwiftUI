@@ -22,9 +22,8 @@ struct TaskListView: View {
                         Button {
                             selectedTask = task
                         } label: {
-                            TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate)
-                            )
-                            .padding(.vertical, -5)
+                            TaskCardView(task: task, viewModel: viewModel)
+                                .padding(.vertical, -5)
                         }
                         .buttonStyle(PlainButtonStyle())
                         .listRowBackground(Color("primary_background"))
@@ -39,7 +38,7 @@ struct TaskListView: View {
                 viewModel.loadTasks()
             }
             .navigationDestination(item: $selectedTask) { task in
-                TaskDetailView(task: task)
+                TaskDetailView(task: task, viewModel: viewModel)
             }
         }
         

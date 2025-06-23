@@ -11,7 +11,7 @@ import SwiftUI
 struct SmartTaskSwiftUIApp: App {
     var body: some Scene {
         WindowGroup {
-            TaskListView()
+            LaunchScreen()
         }
     }
 }

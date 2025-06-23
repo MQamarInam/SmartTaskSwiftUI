@@ -13,11 +13,14 @@ struct TaskListView: View {
     
     var body: some View {
         
-        ScrollView {
-            VStack(spacing: 15) {
-                ForEach(viewModel.tasks) { task in
+        VStack {
+            VStack {
+                List(viewModel.tasks) { task in
                     TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate))
+                        .listRowBackground(Color(red: 1.0, green: 0.88, blue: 0.4))
+                        .listRowSeparator(.hidden)
                 }
+                .listStyle(PlainListStyle())
             }
             .padding(.top)
         }

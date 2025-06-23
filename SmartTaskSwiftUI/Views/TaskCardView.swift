@@ -47,7 +47,6 @@ struct TaskCardView: View {
         .background(Color.white)
         .cornerRadius(8)
         .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 2)
-        .padding(.horizontal)
         
     }
 }

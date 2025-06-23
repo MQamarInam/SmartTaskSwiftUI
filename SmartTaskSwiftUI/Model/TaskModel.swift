@@ -10,7 +10,7 @@ struct TaskResponse: Codable {
     let tasks: [Task]
 }
 
-struct Task: Codable, Identifiable {
+struct Task: Codable, Identifiable, Hashable {
     let id: String
     let targetDate: String
     let dueDate: String?

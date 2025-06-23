@@ -10,23 +10,36 @@ import SwiftUI
 struct TaskListView: View {
     
     @StateObject private var viewModel = TaskViewModel()
+    @State private var selectedTask: Task?
     
     var body: some View {
-        
-        VStack {
+
+        NavigationStack {
             VStack {
-                List(viewModel.tasks) { task in
-                    TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate))
+                VStack {
+                    List(viewModel.tasks) { task in
+                        Button {
+                            selectedTask = task
+                        } label: {
+                            TaskCardView(task: task, daysLeft: viewModel.calculateDaysLeft(from: task.dueDate)
+                            )
+                        }
+                        .buttonStyle(PlainButtonStyle())
                         .listRowBackground(Color(red: 1.0, green: 0.88, blue: 0.4))
                         .listRowSeparator(.hidden)
+                    }
+                    .listStyle(PlainListStyle())
+                    .scrollContentBackground(.hidden)
                 }
-                .listStyle(PlainListStyle())
             }
-            .padding(.top)
-        }
-        .background(Color(red: 1.0, green: 0.88, blue: 0.4).ignoresSafeArea()) // #FFE066
-        .onAppear {
-            viewModel.loadTasks()
+            .background(Color(red: 1.0, green: 0.88, blue: 0.4).ignoresSafeArea())
+            .onAppear {
+                viewModel.loadTasks()
+            }
+            .navigationTitle("Tasks")
+            .navigationDestination(item: $selectedTask) { task in
+                TaskDetailView(task: task)
+            }
         }
         
     }

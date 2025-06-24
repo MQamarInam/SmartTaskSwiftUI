@@ -17,13 +17,19 @@ struct EmptyView: View {
             
             // Foreground Layer
             VStack {
-                Image("empty_view_image")
-                    .padding(.bottom)
-                
-                Text("No tasks for today!")
-                    .padding(.top)
-                    .foregroundStyle(Color.white)
-                    .font(.amsiProBold(size: 25))
+                VStack {
+                    Image("empty_view_image")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(maxWidth: 300)
+                        .padding(.bottom)
+                    
+                    Text("No tasks for today!")
+                        .padding(.top)
+                        .foregroundStyle(Color.white)
+                        .font(.amsiProBold(size: 25))
+                }
+                .padding(.bottom, 70)
             }
             
         }

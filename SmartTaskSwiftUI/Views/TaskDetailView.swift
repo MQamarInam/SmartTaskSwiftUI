@@ -172,8 +172,12 @@ struct TaskDetailView: View {
                             .padding(.top, 30)
                     }
                 }
-                .onChange(of: resolutionStatus) { oldValue, newValue in
-                    if newValue != .unresolved {
+                .onAppear {
+                    resolutionStatus = UserDefaults.standard.getStatus(for: task.id)
+                }
+                .onChange(of: resolutionStatus) { old, new in
+                    if new != .unresolved {
+                        UserDefaults.standard.saveStatus(new, for: task.id)
                         animateImage = false
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
                             animateImage = true

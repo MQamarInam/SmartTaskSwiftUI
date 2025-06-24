@@ -17,12 +17,19 @@ struct TaskListView: View {
         NavigationStack {
             VStack {
                 VStack {
-                    NavigationBarView()
+                    NavigationBarView(
+                        title: viewModel.dateTitle,
+                        onPrevious: { viewModel.goToPreviousDay() },
+                        onNext: { viewModel.goToNextDay() }
+                    )
                     
-                    if viewModel.tasks.isEmpty {
-                        EmptyView()
+                    if viewModel.tasksForSelectedDate.isEmpty {
+                        VStack(spacing: 10) {
+                            EmptyView()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
-                        List(viewModel.tasks) { task in
+                        List(viewModel.tasksForSelectedDate) { task in
                             Button {
                                 selectedTask = task
                             } label: {
@@ -36,15 +43,14 @@ struct TaskListView: View {
                         .listStyle(PlainListStyle())
                         .scrollContentBackground(.hidden)
                     }
-                    
                 }
-            }
-            .background(Color("primary_background").ignoresSafeArea())
-            .onAppear {
-                viewModel.loadTasks()
-            }
-            .navigationDestination(item: $selectedTask) { task in
-                TaskDetailView(task: task, viewModel: viewModel)
+                .background(Color("primary_background").ignoresSafeArea())
+                .onAppear {
+                    viewModel.loadTasks()
+                }
+                .navigationDestination(item: $selectedTask) { task in
+                    TaskDetailView(task: task, viewModel: viewModel)
+                }
             }
         }
         

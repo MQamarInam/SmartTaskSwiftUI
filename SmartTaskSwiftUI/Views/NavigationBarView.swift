@@ -8,11 +8,15 @@
 import SwiftUI
 
 struct NavigationBarView: View {
+    
+    let title: String
+    let onPrevious: () -> Void
+    let onNext: () -> Void
+    
     var body: some View {
+        
         HStack {
-            Button(action: {
-                // Previous action
-            }) {
+            Button(action: onPrevious) {
                 Image("left_arrow")
                     .font(.title2)
                     .foregroundColor(.white)
@@ -20,25 +24,33 @@ struct NavigationBarView: View {
 
             Spacer()
 
-            Text("Today")
+            Text(title)
                 .font(.amsiProBold(size: 15))
                 .foregroundColor(.white)
-                .bold()
 
             Spacer()
 
-            Button(action: {
-                // Next action
-            }) {
+            Button(action: onNext) {
                 Image("right_arrow")
                     .font(.title2)
                     .foregroundColor(.white)
             }
         }
+        .padding(.horizontal, 10)
         
     }
 }
 
 #Preview {
-    NavigationBarView()
+    NavigationBarView(
+        title: "Today",
+        onPrevious: {
+            print("Previous tapped")
+        },
+        onNext: {
+            print("Next tapped")
+        }
+    )
+    .background(Color.black) // optional for visibility in preview
 }
+

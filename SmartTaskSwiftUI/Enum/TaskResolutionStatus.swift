@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TaskResolutionStatus {
+enum TaskResolutionStatus: String, Codable {
     case unresolved
     case resolved
     case cantResolve

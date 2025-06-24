@@ -9,8 +9,9 @@ import Foundation
 import SwiftUI
 
 class TaskViewModel: ObservableObject {
+    
     @Published var tasks: [Task] = []
-
+    @Published var selectedDate: Date = Date()
     private var repository: TaskRepositoryType
 
     init(repository: TaskRepositoryType = MockTaskRepository()) {
@@ -29,7 +30,6 @@ class TaskViewModel: ObservableObject {
         }
     }
 
-
     func calculateDaysLeft(from dueDate: String?) -> String {
         guard let dueDate,
               let date = DateFormatter.taskDateFormatter.date(from: dueDate) else {
@@ -43,4 +43,30 @@ class TaskViewModel: ObservableObject {
         guard let days = components.day else { return "N/A" }
         return "\(days)"
     }
+    
+    func goToPreviousDay() {
+        selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
+    }
+
+    func goToNextDay() {
+        selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
+    }
+
+    var tasksForSelectedDate: [Task] {
+        tasks.filter {
+            guard let taskDate = DateFormatter.taskDateFormatter.date(from: $0.targetDate) else { return false }
+            return Calendar.current.isDate(taskDate, inSameDayAs: selectedDate)
+        }
+    }
+
+    var dateTitle: String {
+        if Calendar.current.isDateInToday(selectedDate) {
+            return "Today"
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            return formatter.string(from: selectedDate)
+        }
+    }
+    
 }

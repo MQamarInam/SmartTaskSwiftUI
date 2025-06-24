@@ -37,7 +37,7 @@
             "id": "dfd482aee1d742ee95b9f101417a3292",
             "TargetDate": "2025-07-14",
             "DueDate": "2025-07-18",
-            "Title": "User 153565 is complaining",
+            "Title": "[MOBILE-12345] User 153565 is complaining that it takes to long for login to finish while being on cellural connection - SomeCoolApp (version 3.0)",
             "Description": "Nothing to add here, everything is said in the task title",
             "Priority": 0
         },
@@ -142,94 +142,6 @@
             "Title": "MVVM migration",
             "Description": "Migrate the login scene into MVVM. The scope of the task is also to address all bugs sitting in backlog associated with the login flow.",
             "Priority": 0
-        },
-        {
-            "id": "a19fce6dbe0d41b2ae1a0001",
-            "TargetDate": "2025-06-19",
-            "DueDate": "2025-06-20",
-            "Title": "Clean Code Review",
-            "Description": "Review team's PRs for code cleanliness and suggest improvements.",
-            "Priority": 1
-          },
-          {
-            "id": "b20edc7fca1a43d2bd2b0002",
-            "TargetDate": "2025-06-20",
-            "DueDate": "2025-06-22",
-            "Title": "Fix Notification Bug",
-            "Description": "Resolve the issue where users don’t receive daily reminders.",
-            "Priority": 2
-          },
-          {
-            "id": "c30fab8edb2e44f3ce3c0003",
-            "TargetDate": "2025-06-21",
-            "DueDate": "2025-06-23",
-            "Title": "Update License Info",
-            "Description": "Ensure all OSS licenses are up to date in the About section.",
-            "Priority": 0
-          },
-          {
-            "id": "d40cbf9fe02f45g4df4d0004",
-            "TargetDate": "2025-06-22",
-            "DueDate": "2025-06-23",
-            "Title": "Redesign Splash Screen",
-            "Description": "Update splash screen with new animation and brand colors.",
-            "Priority": 1
-          },
-          {
-            "id": "e50dbc1af13a46h5eg5e0005",
-            "TargetDate": "2025-06-23",
-            "DueDate": "2025-06-25",
-            "Title": "Team Sync",
-            "Description": "Catch-up meeting to discuss blockers and weekly goals.",
-            "Priority": 0
-          },
-          {
-            "id": "f60eca2bf24b47i6fh6f0006",
-            "TargetDate": "2025-06-24",
-            "DueDate": "2025-06-26",
-            "Title": "SDK Migration",
-            "Description": "Move project to SDK v34 and test backward compatibility.",
-            "Priority": 1
-          },
-          {
-            "id": "g70fdb3cf35c48j7gi7g0007",
-            "TargetDate": "2025-06-25",
-            "DueDate": "2025-06-27",
-            "Title": "Audit Logs",
-            "Description": "Add detailed audit logs to user activity.",
-            "Priority": 2
-          },
-          {
-            "id": "h80aec4df46d49k8hj8h0008",
-            "TargetDate": "2025-06-26",
-            "DueDate": "2025-06-28",
-            "Title": "Firebase Crashlytics",
-            "Description": "Integrate Crashlytics and test crash reporting.",
-            "Priority": 0
-          },
-          {
-            "id": "i90bbc5ef57e50l9ik9i0009",
-            "TargetDate": "2025-06-27",
-            "DueDate": "2025-06-29",
-            "Title": "Security Scan",
-            "Description": "Run SAST/DAST scans before release candidate build.",
-            "Priority": 1
-          },
-          {
-            "id": "j10cac6ff68f51m0jl0j0010",
-            "TargetDate": "2025-06-28",
-            "DueDate": "2025-06-30",
-            "Title": "QA Regression",
-            "Description": "Perform full regression testing on staging environment.",
-            "Priority": 0
-          },
-          {
-            "id": "k20dad7gg79g52n1km1k0011",
-            "TargetDate": "2025-06-29",
-            "DueDate": "2025-07-01",
-            "Title": "Release Blog",
-            "Description": "Publish release highlights blog post on the website.",
-            "Priority": 2
-          }
+        }
     ]
 }

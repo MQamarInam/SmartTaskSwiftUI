@@ -8,9 +8,12 @@
 import SwiftUI
 
 extension DateFormatter {
+    
     static let taskDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd"
+        formatter.dateFormat = "yyyy-MM-dd" // Adjust if your format is different
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.timeZone = TimeZone(secondsFromGMT: 0) // optional
         return formatter
     }()
     

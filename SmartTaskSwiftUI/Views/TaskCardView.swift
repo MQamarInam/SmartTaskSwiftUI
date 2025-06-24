@@ -14,7 +14,7 @@ struct TaskCardView: View {
     
     var body: some View {
         
-        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate)
+        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate, comparedTo: task.targetDate)
         
         VStack(alignment: .leading, spacing: 10) {
             Text(task.title)

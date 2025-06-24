@@ -39,7 +39,7 @@ struct TaskDetailView: View {
 
     var body: some View {
         
-        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate)
+        let daysLeft = viewModel.calculateDaysLeft(from: task.dueDate, comparedTo: task.targetDate)
         
         ZStack {
             // Backgrounnd Layer
@@ -129,6 +129,7 @@ struct TaskDetailView: View {
                             .foregroundColor(statusColor)
                             .padding(.vertical, 7)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("\(task.priority ?? 0)")
                     }
                     .padding(10)
                 }

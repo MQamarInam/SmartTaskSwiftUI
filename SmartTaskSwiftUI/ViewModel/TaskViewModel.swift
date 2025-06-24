@@ -30,19 +30,29 @@ class TaskViewModel: ObservableObject {
         }
     }
 
-    func calculateDaysLeft(from dueDate: String?) -> String {
+    func calculateDaysLeft(from dueDate: String?, comparedTo targetDate: String? = nil) -> String {
+        let formatter = DateFormatter.taskDateFormatter
+        
         guard let dueDate,
-              let date = DateFormatter.taskDateFormatter.date(from: dueDate) else {
+              let due = formatter.date(from: dueDate) else {
             return "N/A"
         }
+        // If targetDate is provided, use it as the base date, else use today
+        let baseDate: Date
+        if let target = targetDate, let parsedTarget = formatter.date(from: target) {
+            baseDate = parsedTarget
+        } else {
+            baseDate = Date()
+        }
 
-        let today = Calendar.current.startOfDay(for: Date())
-        let due = Calendar.current.startOfDay(for: date)
+        let startOfBase = Calendar.current.startOfDay(for: baseDate)
+        let startOfDue = Calendar.current.startOfDay(for: due)
 
-        let components = Calendar.current.dateComponents([.day], from: today, to: due)
+        let components = Calendar.current.dateComponents([.day], from: startOfBase, to: startOfDue)
         guard let days = components.day else { return "N/A" }
         return "\(days)"
     }
+
     
     func goToPreviousDay() {
         selectedDate = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate) ?? selectedDate
@@ -52,11 +62,30 @@ class TaskViewModel: ObservableObject {
         selectedDate = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate) ?? selectedDate
     }
 
+//        .sorted {
+//            if ($0.priority ?? 0) == ($1.priority ?? 0) {
+//                return $0.title < $1.title
+//            } else {
+//                return ($0.priority ?? 0) > ($1.priority ?? 0)
+//            }
+//        }
+
+//    var tasksForSelectedDate: [Task] {
+//        tasks.filter {
+//            guard let taskDate = DateFormatter.taskDateFormatter.date(from: $0.targetDate) else { return false }
+//            return Calendar.current.isDate(taskDate, inSameDayAs: selectedDate)
+//        }
+//    }
+    
     var tasksForSelectedDate: [Task] {
-        tasks.filter {
-            guard let taskDate = DateFormatter.taskDateFormatter.date(from: $0.targetDate) else { return false }
-            return Calendar.current.isDate(taskDate, inSameDayAs: selectedDate)
-        }
+        tasks
+            .filter {
+                guard let taskDate = DateFormatter.taskDateFormatter.date(from: $0.targetDate) else { return false }
+                return Calendar.current.isDate(taskDate, inSameDayAs: selectedDate)
+            }
+            .sorted {
+                ($0.priority ?? 0) > ($1.priority ?? 0)
+            }
     }
 
     var dateTitle: String {
